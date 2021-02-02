@@ -29,6 +29,7 @@ bool jmp_hook(unsigned char* func, unsigned char* dst)
     
     *func = 0xE9; //relative jmp near instruction
     *reinterpret_cast<uintptr_t*>(func + 1) = dst - func - 5;
+    
 #ifdef _WIN32
     if (!VirtualProtect(func, 5, old_protection, &old_protection)) {
         memcpy(func, original_bytes, 5);
