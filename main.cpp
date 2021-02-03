@@ -7,10 +7,17 @@
 #include <iostream>
 #include <cstdint>
 
+#ifdef __GNUC__
+#define INLINE __attribute__((noinline))
+#elif defined _MSC_VER
+#define INLINE __declspec(noinline)
+#endif
+
 #if defined _WIN32
 #include <Windows.h>
 #elif defined __linux__
 #include <sys/mman.h>
+#include <unistd.h>
 #endif
 
 bool jmp_hook(unsigned char* func, unsigned char* dst)
@@ -23,8 +30,9 @@ bool jmp_hook(unsigned char* func, unsigned char* dst)
 
     memcpy(original_bytes, func, 5);
 #elif defined __linux__
-    if (mprotect(func, 5, PROT_EXEC | PROT_READ | PROT_WRITE) != 0)
-            return false;
+    uintptr_t page_size = sysconf(_SC_PAGE_SIZE);
+    if(mprotect(func-(reinterpret_cast<uintptr_t>(func)%page_size), page_size, PROT_EXEC | PROT_READ | PROT_WRITE) != 0)
+        return false;
 #endif
     
     *func = 0xE9; //relative jmp near instruction
@@ -40,7 +48,7 @@ bool jmp_hook(unsigned char* func, unsigned char* dst)
 }
 
 #ifdef __linux__
-int example_function(const char* text) {
+INLINE int example_function(const char* text) {
     std::cout << text << std::endl;
     return 0;
 }
