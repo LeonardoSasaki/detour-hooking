@@ -66,7 +66,7 @@ hooked_function(
 int main(int argc, const char* argv[]) {
 #ifdef __linux__
     example_function("test");
-    jmp_hook(&example_function, reinterpret_cast<unsigned char*>(hooked_function));
+    jmp_hook(reinterpret_cast<unsigned char*>(example_function), reinterpret_cast<unsigned char*>(hooked_function));
     example_function("hello world");
 #elif defined _WIN32
     auto messagebox_address = reinterpret_cast<unsigned char*>(GetProcAddress(
