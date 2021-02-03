@@ -40,3 +40,12 @@ You might have noticed that there are 2 differences: __stdcall and the function 
 ##### *source: https://en.wikipedia.org/wiki/Calling_convention*
 
 After executing my code, you will see that every call to MessageBoxA will be redirected to my own function, which will output "Call to MessageBox redirected, parameters passed: " + the parameters, as you already have seen in the first image on the top of this readme
+
+### Detection vectors
+Since this is a method oftenly used by malwares and cheats, i will be also talking about detection vectors. As aforementioned, this method involves modifying memory page protection and writing in a section which is supposed to not change. Here we have 2 major vectors: the call to VirtualProtect, which can be monitored for modifications of .text memory space and bytepatching of code in functions. Bytepatch can be detected by integrity checks, and if what is in memory differs from what is in disk then a red flag is raised. Some things you could do to circumvent the detection is:
+* Modify the memory protection from a external application using VirtualProtectEx (in windows), so hooks for VirtualProtect inside the target application won't catch it
+* Hook the integrity check routines and manipulate the results
+* Make a jump hook in mid-function so a simple check for initial function bytes won't find a detour, making it slight more difficult to detect
+* If a relative short jump is present inside the function code, you can simply overwrite the offset instead of creating a new jump instruction
+
+After all, this is a simple method that has difficult to hide vectors, if you're dealing with antivirus/anticheats then you should know its inner workings
