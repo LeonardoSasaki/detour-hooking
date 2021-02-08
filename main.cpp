@@ -8,9 +8,9 @@
 #include <cstdint>
 
 #ifdef __GNUC__
-#define INLINE __attribute__((noinline))
+#define NOINLINE __attribute__((noinline))
 #elif defined _MSC_VER
-#define INLINE __declspec(noinline)
+#define NOINLINE __declspec(noinline)
 #endif
 
 #if defined _WIN32
@@ -48,7 +48,7 @@ bool jmp_hook(unsigned char* func, unsigned char* dst)
 }
 
 #ifdef __linux__
-INLINE int example_function(const char* text) {
+NOINLINE int example_function(const char* text) {
     std::cout << text << std::endl;
     return 0;
 }
