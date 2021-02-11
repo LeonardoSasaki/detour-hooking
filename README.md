@@ -60,7 +60,7 @@ Hooking é o conceito de redirecionar o fluxo código existente. Isso permite mo
 
 ![output](https://github.com/LeonardoSasaki/detour-hooking/blob/main/img/output.png?raw=true)
 
-### O que detour hooking?
+### O que é detour hooking?
 Hooking de detour é apenas um entre vários outros métodos, como IAT, VMT, VEH, etc. Detours geralmente funcionam inserindo uma instrução jmp em um dado endereço de memória para redirecionar o fluxo do código. Apesar de uma instrução "call" poder ser usada ao invés de um jmp, ele nem sempre satisfaz o propósito devido ao fato do código retornar para a função original após retornar, além que ele sobrescreverá o prologue da função se você escolher sobrescrever os bytes iniciais da função, que é outro problema que você teria que resolver. Um jmp é o mais ideal e o mais utilizado.
 
 Neste código, nós hookamos duas funções: MessageBoxA da WinAPI (se compilado em Windows, óbviamente) e uma função que eu mesmo escrevi (caso você compile para Linux). Dê uma olhada no disassembly do MessageBoxA antes do hook:
