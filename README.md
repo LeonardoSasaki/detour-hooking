@@ -1,6 +1,6 @@
 # detour hooking
 
-<details><summary><h2>🌐 EN-US</h2></summary>
+<details><summary>🌐 EN-US</summary>
 
 ### What is hooking?
 Hooking is the concept of redirecting existing code flow. This makes possible to modify, block or change the behavior of a function or code at given address for many purposes, including defensive/offensive reasons like monitoring calls to a function, blocking dangerous actions, modifying/reading parameters passed or hiding information/code by faking results (or changing return values) to bypass antivirus checks for example
@@ -53,7 +53,7 @@ Since this is a method oftenly used by malwares and cheats, i will be also talki
 After all, this is a simple method that has difficult to hide vectors, if you're dealing with antivirus/anticheats then you should know its inner workings
 </summary></details>
 
-<details><summary><h2>🌐 PT-BR</h2></summary>
+<details><summary>🌐 PT-BR</summary>
 
 ### O que é hooking?
 Hooking é o conceito de redirecionar o fluxo código existente. Isso permite modificar, bloquear ou alterar o comportamento de uma função ou código em um dado endereço para vários propósitos, incluindo razões ofensivas/defensivas como monitorar chamadas para uma função, bloquear ações perigosas, ler/modificar parâmetros passados ou esconder informações/código falsificando o resultado (por exemplo mudando o valor de retorno da função), para bypassar verificações de antivírus por exemplo.
