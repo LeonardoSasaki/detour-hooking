@@ -1,6 +1,6 @@
 /*
  * Simple detour hooking made for x86
- * I don't plan in making a x64 version anytime 
+ * I don't plan to make a x64 version anytime 
  * soon, this should be enough to get the idea
  */
 
