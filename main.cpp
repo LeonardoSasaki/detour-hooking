@@ -58,7 +58,7 @@ jmp_hook (unsigned char *func, unsigned char *dst)
 
 #if defined(__linux__)
 NOINLINE int
-example_function (char *text)
+example_function (const char *text)
 {
   std::cout << text << std::endl;
   return 0;
@@ -78,7 +78,7 @@ hooked_function (
     << ", " << lpText << ", " << lpCaption << ", " << uType << std::endl;
 
 #elif defined __linux__
-hooked_function (char *text)
+hooked_function (const char *text)
 {
   std::cout << "hooked! original text: " << text << std::endl;
 #endif
