@@ -13,8 +13,9 @@
 #define NOINLINE __declspec(noinline)
 #endif
 
-#if defined _WIN32
+#if defined(_WIN32) || defined(_WIN64)
 #include <windows.h>
+
 #elif defined __linux__
 #include <sys/mman.h>
 #include <unistd.h>
@@ -23,7 +24,7 @@
 bool 
 jmp_hook (unsigned char *func, unsigned char *dst)
 {
-#ifdef _WIN32
+#ifdef defined(_WIN32) || defined(_WIN64)
   char original_bytes[5];
   DWORD old_protection;
     
@@ -41,7 +42,7 @@ jmp_hook (unsigned char *func, unsigned char *dst)
   *func = 0xE9; //relative jmp near instruction
   *(uint32_t *) (func + 1) = dst - func - 5;
     
-#ifdef _WIN32
+#ifdef defined(_WIN32) || defined(_WIN64)
   if (!VirtualProtect (func, 5, old_protection, &old_protection))
     {
       memcpy (func, original_bytes, 5);
@@ -61,7 +62,7 @@ example_function (char *text)
 #endif
 
 int
-#ifdef _WIN32
+#ifdef defined(_WIN32) || defined(_WIN64)
 __stdcall
 hooked_function (
         HWND    hWnd,
@@ -87,7 +88,8 @@ main (int argc, char **argv)
   example_function ("test");
   jmp_hook ((unsigned char *) example_function, (unsigned char *) hooked_function);
   example_function ("hello world");
-#elif defined _WIN32
+
+#elif defined(_WIN32) || defined(_WIN64)
   auto messagebox_address = (unsigned char *) GetProcAddress (GetModuleHandleA ("user32.dll"), "MessageBoxA"));
   jmp_hook (messagebox_address, (unsigned char *) hooked_function);
   MessageBoxA (0, "hello world", "test call", MB_OK);
